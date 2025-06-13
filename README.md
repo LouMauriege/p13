@@ -53,3 +53,9 @@ ng serve
 ```
 
 Now your front-end is started go on to http://localhost:4200 with two tabs or two differents browser and start typing.
+
+## DB
+
+### Setup
+
+To setup the database simply run the `schema.sql` within your RBDMS.
