@@ -1,12 +1,16 @@
 <div id="messages">
-  <button class="btn btn-primary" (click)="onSendMessage()">Send Test Message</button>
+  <form [formGroup]="message">
+    <input type="text" formControlName="from">
+    <textarea formControlName="text"></textarea>
+    <input type="submit" value="Envoyer !" (click)="onSendMessage()">
+  </form>
   <h2>Received messages</h2>
-  <ol>
+  <ul>
     <!-- we will use Angular binding to populate list of messages -->
       @for(message of receivedMessages; track message) {
         <li class="message">
           {{ message }}
         </li>
       }
-  </ol>
+  </ul>
 </div>

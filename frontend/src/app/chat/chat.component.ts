@@ -2,11 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RxStompService } from '../services/rx-stomp.service';
 import { Message } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
@@ -14,6 +15,11 @@ import { Subscription } from 'rxjs';
 export class ChatComponent implements OnInit, OnDestroy {
   receivedMessages: string[] = [];
   private topicSubscription!: Subscription;
+
+  message = new FormGroup({
+    from: new FormControl(''),
+    text: new FormControl('')
+  });
 
   constructor(private rxStompService: RxStompService) {}
 
@@ -33,10 +39,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   onSendMessage() {
     const message = {
-      from: "User1",
-      text: `Message generated at ${new Date()}`
+      from: this.message.get("from")?.value,
+      text: this.message.get("text")?.value
     }
     this.rxStompService.publish({ destination: '/app/chat', body: JSON.stringify(message) });
-    console.log(this.receivedMessages);
+    this.message.get("text")?.reset();
+    console.log(this.message);
   }
 }
