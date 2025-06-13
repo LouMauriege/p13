@@ -1,1 +1,12 @@
-<p>chat works!</p>
+<div id="messages">
+  <button class="btn btn-primary" (click)="onSendMessage()">Send Test Message</button>
+  <h2>Received messages</h2>
+  <ol>
+    <!-- we will use Angular binding to populate list of messages -->
+      @for(message of receivedMessages; track message) {
+        <li class="message">
+          {{ message }}
+        </li>
+      }
+  </ol>
+</div>
